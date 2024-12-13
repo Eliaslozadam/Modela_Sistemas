@@ -1,0 +1,242 @@
+
+\documentclass[letterpaper,11pt]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,float}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+
+\setcounter{MaxMatrixCols}{10}
+%TCIDATA{OutputFilter=LATEX.DLL}
+%TCIDATA{Version=5.50.0.2953}
+%TCIDATA{<META NAME="SaveForMode" CONTENT="1">}
+%TCIDATA{BibliographyScheme=BibTeX}
+%TCIDATA{LastRevised=Tuesday, December 10, 2024 23:02:01}
+%TCIDATA{<META NAME="GraphicsSave" CONTENT="32">}
+%TCIDATA{ComputeDefs=
+%$Z=0.033$
+%$C=1.5$
+%$R=0.95$
+%$L=0.01$
+%}
+
+
+\input{tcilatex}
+\renewcommand{\baselinestretch}{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5\baselineskip}
+\pretolerance=2000 \tolerance=3000
+\renewcommand{\abstractname}{Resumen}
+
+\begin{document}
+
+\title{Proyecto Final: Sistema de transporte de ox\'{\i}geno en la sangre \
+"SIRA"}
+\author{Bejarano Lozada Elias \\
+%EndAName
+Departamento de Ingenier\'{\i}a El\'{e}ctrica y Electr\'{o}nica\\
+Tecnol\'{o}gico Nacional de M\'{e}xico / Instituto Tecnol\'{o}gico de Tijuana%
+}
+\maketitle
+
+\noindent \noindent \textbf{Palabras clave: }Controlador PID, Tratamiento, 
+
+Correo:
+
+\noindent \noindent Carrera: \textbf{Ingenier\'{\i}a Biom\'{e}dica}
+
+\noindent Asignatura: \textbf{Modelado de Sistemas Fisiol\'{o}gicos}
+
+\noindent Profesor: \href{https://biomath.xyz/}{\textbf{Dr. Paul Antonio
+Valle Trujillo}} (paul.valle@tectijuana.edu.mx)
+
+\section{Funci\'{o}n de transferencia}
+
+Para nuestra funci\'{o}n de transferencia, asignamos distintas variables
+para simplificar nuestra ecuaci\'{o}n:
+
+$\ \ \ \ \ a=LC_{1}C_{2}R_{2}$
+
+$\ \ \ \ \ b=C_{1}C_{2}R_{1}R_{2}+LC_{1}+LC_{2}$
+
+$\ \ \ \ \ c=C_{1}R_{1}+C_{2}R_{1}+C_{2}R_{2}$
+
+$\ \ \ \ \ d=1$
+
+\begin{eqnarray*}
+\frac{P_{p}\left( s\right) }{P_{ao}\left( s\right) } &=&\frac{\left( \frac{1%
+}{C_{2}s}\right) I_{2}\left( s\right) }{\left( \frac{as^{3}+bs^{2}+cs+d}{%
+sC_{2}}\right) I_{2}\left( s\right) } \\
+\frac{P_{p}\left( s\right) }{P_{ao}\left( s\right) } &=&\frac{\frac{1}{C_{2}s%
+}}{\frac{as^{3}+bs^{2}+cs+d}{sC_{2}}} \\
+\frac{P_{p}\left( s\right) }{P_{ao}\left( s\right) } &=&\frac{\left(
+1\right) \left( sC_{2}\right) }{\left( as^{3}+bs^{2}+cs+d\right) \left(
+C_{2}s\right) } \\
+\frac{P_{p}\left( s\right) }{P_{ao}\left( s\right) } &=&\frac{1}{%
+as^{3}+bs^{2}+cs+d}
+\end{eqnarray*}
+
+\subsection{Ecuaciones principales}
+
+\bigskip\ Ecuaci\'{o}n de voltaje de entrada, igualdad de voltaje y voltaje
+de salida.
+
+\begin{eqnarray*}
+P_{ao}\left( t\right) &=&L\frac{di_{1}\left( t\right) }{dt}+R_{1}i_{1}\left(
+t\right) +\frac{1}{C_{1}}\int \left[ i_{1}\left( t\right) -i_{2}\left(
+t\right) \right] dt \\
+\frac{1}{C_{1}}\int \left[ i_{1}\left( t\right) -i_{2}\left( t\right) \right]
+dt &=&R_{2}i_{2}\left( t\right) +\frac{1}{C_{2}}\int i_{2}\left( t\right) dt
+\\
+P_{p}\left( t\right) &=&\frac{1}{C_{2}}\int i_{2}\left( t\right) dt
+\end{eqnarray*}
+
+\subsection{Ecuaciones integrodiferenciales}
+
+\bigskip Despejamos $i_{1}$ 
+\begin{eqnarray*}
+P_{ao}\left( t\right) &=&L\frac{di_{1}\left( t\right) }{dt}+R_{1}i_{1}\left(
+t\right) +\frac{1}{C_{1}}\int \left[ i_{1}\left( t\right) -i_{2}\left(
+t\right) \right] dt \\
+R_{1}i_{1}\left( t\right) &=&V_{e}\left( t\right) -L\frac{di_{1}\left(
+t\right) }{dt}-\frac{1}{C_{1}}\int \left[ i_{1}\left( t\right) -i_{2}\left(
+t\right) \right] dt \\
+i_{1}\left( t\right) &=&\left[ P_{ao}\left( t\right) -L\frac{di_{1}\left(
+t\right) }{dt}-\frac{1}{C_{1}}\int \left[ i_{1}\left( t\right) -i_{2}\left(
+t\right) \right] dt\right] \frac{1}{R_{1}}
+\end{eqnarray*}
+
+\bigskip \bigskip Despejamos $i_{2}$
+
+\begin{eqnarray*}
+\frac{1}{C_{1}}\int \left[ i_{1}\left( t\right) -i_{2}\left( t\right) \right]
+dt &=&R_{2}i_{2}\left( t\right) +\frac{1}{C_{2}}\int i_{2}\left( t\right) dt
+\\
+R_{2}i_{2}\left( t\right) &=&\frac{1}{C_{1}}\int \left[ i_{1}\left( t\right)
+-i_{2}\left( t\right) \right] dt-\frac{1}{C_{2}}\int i_{2}\left( t\right) dt
+\\
+i_{2}\left( t\right) &=&\left[ \frac{1}{C_{1}}\int \left[ i_{1}\left(
+t\right) -i_{2}\left( t\right) \right] dt-\frac{1}{C_{2}}\int i_{2}\left(
+t\right) dt\right] \frac{1}{R_{2}}
+\end{eqnarray*}
+
+\bigskip
+
+\begin{equation*}
+P_{p}\left( t\right) =\frac{1}{C_{2}}\int i_{2}\left( t\right) dt
+\end{equation*}
+
+\subsection{Transformada de Laplace}
+
+\bigskip 
+\begin{eqnarray*}
+P_{ao}\left( s\right) &=&LsI_{1}\left( s\right) +R_{1}I_{1}\left( s\right) +%
+\frac{I_{1}\left( s\right) -I_{2}\left( s\right) }{C_{1}s} \\
+\frac{1}{C_{1}s}\left[ I_{1}\left( s\right) -I_{2}\left( s\right) \right]
+&=&\left( R_{2}+\frac{1}{C_{2}s}\right) I_{2}\left( s\right) \\
+P_{p}\left( s\right) &=&\frac{I_{2}\left( s\right) }{C_{2}s}
+\end{eqnarray*}
+
+\subsection{Procedimiento algebraico}
+
+\begin{eqnarray*}
+\frac{1}{C_{1}s}\left[ I_{1}\left( s\right) -I_{2}\left( s\right) \right]
+&=&\left( R_{2}+\frac{1}{C_{2}s}\right) I_{2}\left( s\right) \\
+\frac{I_{1}\left( s\right) }{C_{1}s}-\frac{I_{2}\left( s\right) }{C_{1}s}
+&=&\left( R_{2}+\frac{1}{C_{2}s}\right) I_{2}\left( s\right) \\
+\frac{I_{1}\left( s\right) }{C_{1}s} &=&\left( R_{2}+\frac{1}{C_{2}s}\right)
+I_{2}\left( s\right) +\frac{I_{2}\left( s\right) }{C_{1}s} \\
+\frac{1}{C_{1}s}I_{1}\left( s\right) &=&\left( R_{2}+\frac{1}{C_{2}s}+\frac{1%
+}{C_{1}s}\right) I_{2}\left( s\right) \\
+I_{1}\left( s\right) &=&\frac{\left( R_{2}+\frac{1}{C_{2}s}+\frac{1}{C_{1}s}%
+\right) I_{2}\left( s\right) }{\frac{1}{C_{1}s}} \\
+I_{1}\left( s\right) &=&\left( \frac{R_{2}+\frac{1}{C_{2}s}+\frac{1}{C_{1}s}%
+}{\frac{1}{C_{1}s}}\right) I_{2}\left( s\right) \\
+I_{1}\left( s\right) &=&\left[ \frac{\frac{1}{sC_{1}C_{2}}\left(
+C_{1}+C_{2}+R_{2}sC_{1}C_{2}\right) }{\frac{1}{C_{1}s}}\right] I_{2}\left(
+s\right) \\
+I_{1}\left( s\right) &=&\frac{C_{1}+C_{2}+R_{2}sC_{1}C_{2}}{C_{2}}%
+I_{2}\left( s\right)
+\end{eqnarray*}
+
+\begin{equation*}
+P_{p}\left( s\right) =\frac{I_{2}\left( s\right) }{C_{2}s}
+\end{equation*}
+
+\textbf{Sustituir }$I_{1}\left( s\right) $\ \textbf{en} $P_{ao}\left(
+s\right) $:
+
+\begin{eqnarray*}
+P_{ao}\left( s\right) &=&LsI_{1}\left( s\right) +R_{1}I_{1}\left( s\right) +%
+\frac{I_{1}\left( s\right) -I_{2}\left( s\right) }{C_{1}s} \\
+P_{ao}\left( s\right) &=&LsI_{1}\left( s\right) +R_{1}I_{1}\left( s\right) +%
+\frac{I_{1}\left( s\right) }{C_{1}s}-\frac{I_{2}\left( s\right) }{C_{1}s} \\
+P_{ao}\left( s\right) &=&\left( Ls+R_{1}+\frac{1}{C_{1}s}\right) I_{1}\left(
+s\right) -\frac{I_{2}\left( s\right) }{C_{1}s} \\
+P_{ao}\left( s\right) &=&\left( Ls+R_{1}+\frac{1}{C_{1}s}\right) \left( 
+\frac{C_{1}+C_{2}+R_{2}sC_{1}C_{2}}{C_{2}}I_{2}\left( s\right) \right) -%
+\frac{I_{2}\left( s\right) }{C_{1}s} \\
+P_{ao}\left( s\right) &=&\left[ \left( Ls+R_{1}+\frac{1}{C_{1}s}\right)
+\left( \frac{C_{1}+C_{2}+R_{2}sC_{1}C_{2}}{C_{2}}\right) -\frac{1}{C_{1}s}%
+\right] I_{2}\left( s\right) \\
+P_{ao}\left( s\right) &=&\left[ \frac{s^{3}LC_{1}C_{2}R_{2}+\left(
+C_{1}C_{2}R_{1}R_{2}+LC_{1}+LC_{2}\right) s^{2}+\left(
+C_{1}R_{1}+C_{2}R_{1}+C_{2}R_{2}\right) s+1}{sC_{2}}\right] I_{2}\left(
+s\right)
+\end{eqnarray*}
+
+$\ \ \ \ \ a=LC_{1}C_{2}R_{2}$
+
+$\ \ \ \ \ b=C_{1}C_{2}R_{1}R_{2}+LC_{1}+LC_{2}$
+
+$\ \ \ \ \ c=C_{1}R_{1}+C_{2}R_{1}+C_{2}R_{2}$
+
+$\ \ \ \ \ d=1$
+
+\begin{equation*}
+P_{ao}\left( s\right) =\left( \frac{as^{3}+bs^{2}+cs+d}{sC_{2}}\right)
+I_{2}\left( s\right)
+\end{equation*}
+
+\bigskip
+
+\section{Error en estado estacionario}
+
+\begin{eqnarray*}
+e\left( t\right) &=&\lim_{s\rightarrow 0}\left( \frac{1}{s}\right) \left( 1-%
+\frac{P_{p}\left( s\right) }{P_{ao}\left( s\right) }\right) \\
+e\left( t\right) &=&\lim_{s\rightarrow 0}\left( \frac{1}{s}\right) \left( 1-%
+\frac{1}{as^{3}+bs^{2}+cs+d}\right) =1-1=0
+\end{eqnarray*}
+
+\section{C\'{a}lculo de componentes para el controlador PID}
+
+Con base en las ganancias sincronizadas con Simulink, las cuales estan dadas
+por lo siguiente:%
+\begin{eqnarray*}
+k_{P} &=&7504.31283990786 \\
+k_{I} &=&40028.7836532803 \\
+k_{D} &=&312.586659285931
+\end{eqnarray*}
+
+$\,$
+
+Entonces, para realizar el c\'{a}lculo de los valores de los componentes, se
+propone un valor de capacitancia para $C_{r}$, con el cual se c\'{a}lcula un
+valor para la resistencia $R_{e}$, ahora, siguiendo el mismo procedimiento
+se calcula el valor de la resistencia $R_{r}$.
+
+:
+
+\begin{eqnarray*}
+C_{r} &=&1\times 10^{-6} \\
+R_{e} &=&\frac{1}{k_{I}C_{r}}=\frac{1}{\left( 40028.7836532803\right) \left(
+1\times 10^{-6}\right) }=24.\,\allowbreak 982\Omega \\
+R_{r} &=&k_{P}R_{e}=\left( 7504.31283990786\right) \left( 24.\,\allowbreak
+982\right) =1.\,\allowbreak 874\,7\times 10^{5}\Omega \\
+C_{e} &=&\frac{k_{D}}{R_{r}}=\frac{312.586659285931}{1.\,\allowbreak
+874\,7\times 10^{5}}=1.\,\allowbreak 667\,4\times 10^{-3}F
+\end{eqnarray*}
+
+\end{document}
